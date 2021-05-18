@@ -1,0 +1,254 @@
+#!/bin/bash
+
+HEADER=$(head -n40 default.json)
+LIST=$(tail -n329 default.json | head -n-2 | cut -d":" -f1)
+x=41
+BODY=""
+
+tristate () {
+		local TFNV=$(shuf -i 1-3 -n 1)
+		if [ "$TFNV" = "1" ] ; then
+			echo "true"
+		elif [ "$TFNV" = "2" ] ; then
+			echo "false"
+		else
+			echo "null"
+		fi
+}
+
+bistate () {
+	local TFNV=$(shuf -i 1-2 -n 1)
+	if [ "$TFNV" = "1" ] ; then
+		echo "true"
+	else
+		echo "false"
+	fi
+}
+
+nrange () {
+	echo "$(shuf -i $1-$2 -n 1)"
+}
+
+for i in $LIST ; do
+	VAL=""
+	case $x in
+		43 | 46 | 64 | 96 | 15[0-1] | 157 | 158 | 163 | 176 | 195 | 20[3-6] | 20[8-9] | 210 | 301 | 30[4-7] | 310 | 317 | 353 | 364)
+			VAL="$(bistate)"
+			;;
+		44)
+			if [ "$val43" = "true" ] ; then
+				VAL="$(nrange 0 8)"
+			else
+				VAL="0"
+			fi
+			;;
+		45)
+			VAL="$(nrange 0 5)"
+			;;
+		65 | 231 | 335 | 36[2-3] )
+			VAL="$(nrange 0 4)"
+			;;
+		62)
+			VAL="$(nrange 0 8)"
+			;;
+		73)
+			if [ "$val43" = "true" ] ; then
+				VAL="$(tristate)"
+			else
+				VAL="false"
+			fi
+			;;
+		85 | 134 | 13[6-7] | 361)
+			VAL="$(nrange 0 3)"
+			;;
+		87 | 360)
+			VAL="$(nrange 0 2)"
+			;;
+		97 | 167 | 182 | 19[6-9] | 20[0-2] | 29[4-5] | 29[8-9] | 300 | 30[2-3] | 309 | 316 | 322 | 33[3-4] | 350 | 337)
+			VAL="false"
+			;;
+		11[2-9] | 16[8-9] | 17[0-5] | 17[7-9] | 18[0-1] | 18[5-9] | 19[0-4] | 315 )
+			VAL="true"
+			;;
+		102 | 105 | 110 )
+			if [ "$val100" = "true" ] ; then
+				VAL="$(tristate)"
+			else
+				VAL="false"
+			fi
+			;;
+		103 | 104 | 111 )
+			if [ "$val101" = "true" ] ; then
+				VAL="$(tristate)"
+			else
+				VAL="false"
+			fi
+			;;
+		106 | 164 | 168 | 169 )
+			if [ "$val98" = "true" ] ; then
+				VAL="$(tristate)"
+			else
+				VAL="false"
+			fi
+			;;
+		13[0-3] | 135 | 13[8-9] )
+			VAL="$(nrange 0 1)"
+			;;
+		183 )
+			VAL="$(nrange 0 50)"
+			;;
+		184 | 207)
+			VAL="$(nrange 0 7)"
+			;;
+		211)
+			if [ "$val210" = "true" ] ; then
+				VAL="$(nrange 0 12)"
+			else
+				VAL=0
+			fi
+			;;
+		212 | 214 )
+			if [ "$val210" = "true" ] ; then
+				VAL="$(tristate)"
+			else
+				VAL="false"
+			fi
+			;;
+		213)
+			if [ "$val209" = "true" ] ; then
+				VAL="$(tristate)"
+			else
+				VAL="false"
+			fi
+			;;
+		215 | 217 | 219 | 221 | 223)
+			VAL="$(nrange 25 100)"
+			;;
+		216 | 218 | 220 | 222 | 224)
+			VAL="$(nrange 100 500)"
+			;;
+		225)
+			VALp="$(nrange 10 50)"
+			VAL=$(echo "scale=1; $VALp/10" | bc)
+			VALp=""
+			;;
+		226)
+			VAL="$(nrange 0 500)"
+			;;
+		22[7-8])
+			VAL="$(nrange 0 45)"
+			;;
+		229)
+			VAL="$(nrange 0 11)"
+			;;
+		230)
+			VAL="$(nrange 0 9)"
+			;;
+		28[8-9] | 29[0-3] | 29[6-7])
+			if [ "$val287" = "true" ] ; then
+				VAL="$(tristate)"
+			else
+				VAL="false"
+			fi
+			;;
+		308)
+			if [ "$val307" = "true" ] ; then
+				VAL="$(bistate)"
+			else
+				VAL="false"
+			fi
+			;;
+		312)
+			if [ "$val311" = "true" ] ; then
+				VAL="$(tristate)"
+			else
+				VAL="false"
+			fi
+			;;
+		314)
+			if [ "$val313" = "true" ] ; then
+				VAL="$(tristate)"
+			else
+				VAL="false"
+			fi
+			;;
+		321)
+			if [ "$val319" = "true" ] || [ "$val320" = "true" ] ; then
+				VAL="$(tristate)"
+			else
+				VAL="false"
+			fi
+			;;
+		326 | 328 )
+			VALp="$(nrange 0 9)"
+			VAL=$(echo "$VALp*-1" | bc)
+			VALp=""
+			;;
+		327 | 329 )
+			VAL="$(nrange 0 9)"
+			;;
+		330)
+			if [ "$val57" = "true" ] ; then
+				VAL="$(tristate)"
+			else
+				VAL="false"
+			fi
+			;;
+		339 | 340)
+			if [ "$val338" = "true" ] ; then
+				VAL="$(tristate)"
+			else
+				VAL="false"
+			fi
+			;;
+		34[2-3])
+			if [ "$val340" = "true" ] ; then
+				VAL="$(tristate)"
+			else
+				VAL="false"
+			fi
+			;;
+		35[1-2])
+			if [ "$val341" = "true" ] ; then
+				VAL="$(nrange 0 4)"
+			else
+				VAL=0
+			fi
+			;;
+		35[4-6])
+			VAL="$(nrange 6 9)"
+			;;
+		35[7-8])
+			VAL="$(nrange 2 6)"
+			;;
+		359)
+			VAL=3
+			;;
+		367)
+			if [ "$val81" = "true" ] ; then
+				VAL="$(tristate)"
+			else
+				VAL="false"
+			fi
+			;;
+		*)
+			VAL="$(tristate)"
+			;;
+	esac
+
+	valname="val$x"
+	export $valname="$VAL"
+	if [ "$x" = "41" ] ; then 
+		BODY="$BODY
+	$i: $VAL"
+	else
+		BODY="$BODY,
+	$i: $VAL"
+	fi
+	x=$(expr $x + 1)
+done
+TSTAMP=$(date +%Y%m%d%H%M%S)
+echo "$HEADER $BODY
+	}
+}
+" >> $TSTAMP-random.json
