@@ -1,20 +1,50 @@
 #!/bin/bash
 
+printHelp () {
+	echo "usage: $0 [-h] [-w NumberFrom0-100] [-b]
+
+	-h	help: print this help and exit.
+	-w	tristate weight percentage as an interger: If unset, will default to 33. This is the percentage chance that a flag that can roll tristate will roll tristate. So, if you set this to 67, then it will be a 67% chance that a tristate flag will roll as unknown, and a 16.5% chance that it will roll either yes or no each.
+	-b	bistate only: Will disable the tristate option entirely. This *should* override the -w flag."
+
+	exit 0
+}
+
+while getopts "w:hb" opt ; do
+	case ${opt} in
+		h)
+			# Print the help.
+			printHelp
+			;;
+		w)
+			# Tristate Weighting
+			TQW=$OPTARG
+			declare -i TQW
+			nve='^[0-9]+$'
+			if ! [[ $TQW =~ $nve ]] ; then
+				echo "Error: Invalid entry for -w flag. Please use a whole, postive number." >&2 ; exit 1
+			fi
+			if [[ $TQW -gt 100 ]] ; then
+				echo "Error: Please enter a number between 0 and 100." >&2 ; exit 1
+			fi
+			;;
+		b)
+			# Disable Tristate
+			TDI=1
+			;;
+		*)
+			#Anything else. print help and exit.
+			printHelp
+			;;
+	esac
+done
+
+
 HEADER=$(head -n40 default.json)
 LIST=$(tail -n329 default.json | head -n-2 | cut -d":" -f1)
 x=41
 BODY=""
 
-tristate () {
-		local TFNV=$(shuf -i 1-3 -n 1)
-		if [ "$TFNV" = "1" ] ; then
-			echo "true"
-		elif [ "$TFNV" = "2" ] ; then
-			echo "false"
-		else
-			echo "null"
-		fi
-}
 
 bistate () {
 	local TFNV=$(shuf -i 1-2 -n 1)
@@ -24,6 +54,31 @@ bistate () {
 		echo "false"
 	fi
 }
+
+if [ "$TDI" = "1" ] ; then
+	tristate () {
+		bistate
+	}
+else
+	if [ -z ${TQW+x} ] ; then
+		TQW=33
+	fi
+	PNP=$(echo "scale=0; 100-$TQW" | bc)
+	POSP=$(echo "scale=0; $PNP/2" | bc)
+	declare -i PNP
+	declare -i POSP
+	tristate () {
+		local TFNV=$(shuf -i 1-100 -n 1)
+		declare -i TFNV
+		if [[ $TFNV -gt $PNP ]] ; then
+			echo "null"
+		elif [[ $TFNV -lt $POSP ]] ; then
+			echo "false"
+		else
+			echo "true"
+		fi
+	}
+fi
 
 nrange () {
 	echo "$(shuf -i $1-$2 -n 1)"
@@ -238,12 +293,12 @@ for i in $LIST ; do
 
 	valname="val$x"
 	export $valname="$VAL"
-	if [ "$x" = "41" ] ; then 
-		BODY="$BODY
-	$i: $VAL"
+	if [ "$x" = "41" ] ; then
+		BODY="
+  $i: $VAL"
 	else
 		BODY="$BODY,
-	$i: $VAL"
+  $i: $VAL"
 	fi
 	x=$(expr $x + 1)
 done
