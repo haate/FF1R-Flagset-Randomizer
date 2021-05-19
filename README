@@ -3,3 +3,11 @@ This is just a simple little bash script to generate a random flag set for the F
 It's simple. It's ugly. And it'll generate some hellaciously disgusting flagsets.
 
 I'll probably get around to re-writing it in python eventually. Until I do though, I'm just going to keep using bash to do it.
+
+Usage: ./generator.sh [-h] [-w NumberFrom0-100] [-b]
+
+        -h      help: print this help and exit.
+        -w      tristate weight percentage as an interger: If unset, will default to 33. This is the percentage chance that a flag that can roll tristate will roll tristate. So, if you set this to 67, then it will be a 67% chance that a tristate flag will roll as unknown, and a 16.5% chance that it will roll either yes or no each.
+        -b      bistate only: Will disable the tristate option entirely. This *should* override the -w flag.
+        
+Please note: If you try running it using `sh generator.sh`, and you're using Ubuntu, it will fail because Ubuntu's default `sh` comman links to `dash` rather than `bash`, and dash doesn't support the use of the `declare` function.
