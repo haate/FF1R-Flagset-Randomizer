@@ -14,3 +14,7 @@ Usage: ./generator.sh [-h] [-w NumberFrom0-100] [-b]
         
 Please note: If you try running it using `sh generator.sh`, and you're using Ubuntu, it will fail because Ubuntu's default `sh` command 
 links to `dash` rather than `bash`, and dash doesn't support the use of the `declare` function.
+
+Other known issues: Sometimes, you will get a `Preset Load Failed` when importing the json. This is because some of the
+flags don't quite mesh with what I thought they were. If that happens, please open an issue with the error text pasted in, so
+I can fix it up.
