@@ -100,6 +100,13 @@ for i in $LIST ; do
 		45)
 			VAL="$(nrange 0 5)"
 			;;
+		56 | 6[0-1] )
+			if [ "$val55" = "true" ] ; then
+				VAL="$(tristate)"
+			else
+				VAL="false"
+			fi
+			;;
 		65 | 231 | 335 | 36[2-3] )
 			VAL="$(nrange 0 4)"
 			;;
