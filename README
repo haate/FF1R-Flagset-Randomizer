@@ -11,6 +11,8 @@ Usage: ./generator.sh [-h] [-w NumberFrom0-100] [-b]
                 that can roll tristate will roll tristate. So, if you set this to 67, then it will be a 67% chance that a tristate 
                 flag will roll as unknown, and a 16.5% chance that it will roll either yes or no each.
         -b      bistate only: Will disable the tristate option entirely. This *should* override the -w flag.
+        -f      output file: Where you want the output file to land. If left empty, it will be placed in the working directory with a filename
+                of YYYYmmDDHHMMSS-random.json. If you're specifying a file path, please put it in quotation marks."
         
 Please note: If you try running it using `sh generator.sh`, and you're using Ubuntu, it will fail because Ubuntu's default `sh` command 
 links to `dash` rather than `bash`, and dash doesn't support the use of the `declare` function.
