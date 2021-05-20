@@ -100,7 +100,7 @@ for i in $LIST ; do
   VAL=""
   case $x in
     41)
-      if [ "$val40" = "true" ] ; then
+      if [ "$val40" != "false" ] ; then
         VAL="$(tristate)"
       else
         VAL="false"
@@ -110,7 +110,7 @@ for i in $LIST ; do
       VAL="$(bistate)"
       ;;
     44)
-      if [ "$val43" = "true" ] ; then
+      if [ "$val43" != "false" ] ; then
         VAL="$(nrange 0 8)"
       else
         VAL="0"
@@ -120,14 +120,14 @@ for i in $LIST ; do
       VAL="$(nrange 0 5)"
       ;;
     54)
-      if [ "$val53" = "true" ] ; then
+      if [ "$val53" != "false" ] ; then
         VAL="$(tristate)"
       else
         VAL="false"
       fi
       ;;
     56 | 6[0-1] )
-      if [ "$val55" = "true" ] ; then
+      if [ "$val55" != "false" ] ; then
         VAL="$(tristate)"
       else
         VAL="false"
@@ -140,24 +140,24 @@ for i in $LIST ; do
       VAL="$(nrange 0 8)"
       ;;
     70)
-      if [ "$val68" = "true" ] ; then
+      if [ "$val68" != "false" ] ; then
         VAL="$(tristate)"
       else
         VAL="false"
       fi
-      if [ "$val69" = "true" ] ; then
+      if [ "$val69" != "false" ] ; then
         VAL="false"
       fi
       ;;
     73)
-      if [ "$val43" = "true" ] ; then
+      if [ "$val43" != "false" ] ; then
         VAL="$(tristate)"
       else
         VAL="false"
       fi
       ;;
     76 | 78 | 83)
-      if [ "$val75" = "true" ] ; then
+      if [ "$val75" != "false" ] ; then
         VAL="$(tristate)"
       else
         VAL="false"
@@ -183,21 +183,21 @@ for i in $LIST ; do
       VAL="true"
       ;;
     102 | 105 | 110 )
-      if [ "$val100" = "true" ] ; then
+      if [ "$val100" != "false" ] ; then
         VAL="$(tristate)"
       else
         VAL="false"
       fi
       ;;
     103 | 104 | 111 )
-      if [ "$val101" = "true" ] ; then
+      if [ "$val101" != "false" ] ; then
         VAL="$(tristate)"
       else
         VAL="false"
       fi
       ;;
     106 | 164 | 168 | 169 )
-      if [ "$val98" = "true" ] ; then
+      if [ "$val98" != "false" ] ; then
         VAL="$(tristate)"
       else
         VAL="false"
@@ -213,21 +213,21 @@ for i in $LIST ; do
       VAL="$(nrange 0 7)"
       ;;
     211)
-      if [ "$val210" = "true" ] ; then
+      if [ "$val210" != "false" ] ; then
         VAL="$(nrange 0 12)"
       else
         VAL=0
       fi
       ;;
     212 | 214 )
-      if [ "$val210" = "true" ] ; then
+      if [ "$val210" != "false" ] ; then
         VAL="$(tristate)"
       else
         VAL="false"
       fi
       ;;
     213)
-      if [ "$val209" = "true" ] ; then
+      if [ "$val209" != "false" ] ; then
         VAL="$(tristate)"
       else
         VAL="false"
@@ -257,42 +257,42 @@ for i in $LIST ; do
       VAL="$(nrange 0 9)"
       ;;
     28[8-9] | 29[0-3] | 29[6-7])
-      if [ "$val287" = "true" ] ; then
+      if [ "$val287" != "false" ] ; then
         VAL="$(tristate)"
       else
         VAL="false"
       fi
       ;;
     306)
-      if [ "$val305" = "true" ] ; then
+      if [ "$val305" != "false" ] ; then
         VAL="false"
       else
         VAL="$(bistate)"
       fi
       ;;
     308)
-      if [ "$val307" = "true" ] ; then
+      if [ "$val307" != "false" ] ; then
         VAL="$(bistate)"
       else
         VAL="false"
       fi
       ;;
     312)
-      if [ "$val311" = "true" ] ; then
+      if [ "$val311" != "false" ] ; then
         VAL="$(tristate)"
       else
         VAL="false"
       fi
       ;;
     314)
-      if [ "$val313" = "true" ] ; then
+      if [ "$val313" != "false" ] ; then
         VAL="$(tristate)"
       else
         VAL="false"
       fi
       ;;
     321)
-      if [ "$val319" = "true" ] || [ "$val320" = "true" ] ; then
+      if [ "$val319" != "false" ] || [ "$val320" != "false" ] ; then
         VAL="$(tristate)"
       else
         VAL="false"
@@ -307,28 +307,28 @@ for i in $LIST ; do
       VAL="$(nrange 0 9)"
       ;;
     330)
-      if [ "$val57" = "true" ] ; then
+      if [ "$val57" != "false" ] ; then
         VAL="$(tristate)"
       else
         VAL="false"
       fi
       ;;
     339 | 340)
-      if [ "$val338" = "true" ] ; then
+      if [ "$val338" != "false" ] ; then
         VAL="$(tristate)"
       else
         VAL="false"
       fi
       ;;
     34[2-3])
-      if [ "$val340" = "true" ] ; then
+      if [ "$val340" != "false" ] ; then
         VAL="$(tristate)"
       else
         VAL="false"
       fi
       ;;
     35[1-2])
-      if [ "$val341" = "true" ] ; then
+      if [ "$val341" != "false" ] ; then
         VAL="$(nrange 0 4)"
       else
         VAL=0
@@ -344,7 +344,7 @@ for i in $LIST ; do
       VAL=3
       ;;
     367)
-      if [ "$val81" = "true" ] && [ "$val82" = "true" ] ; then
+      if [ "$val81" != "false" ] && [ "$val82" != "false" ] ; then
         VAL="$(tristate)"
       else
         VAL="false"
