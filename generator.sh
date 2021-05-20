@@ -1,16 +1,18 @@
 #!/bin/bash
 
 printHelp () {
-  echo "usage: $0 [-h] [-w NumberFrom0-100] [-b]
+  echo "usage: $0 [-h] [-w NumberFrom0-100] [-b] [-f \"Output/File/Path/And/Or/Name\" ]
 
   -h  help: print this help and exit.
   -w  tristate weight percentage as an interger: If unset, will default to 33. This is the percentage chance that a flag that can roll tristate will roll tristate. So, if you set this to 67, then it will be a 67% chance that a tristate flag will roll as unknown, and a 16.5% chance that it will roll either yes or no each.
-  -b  bistate only: Will disable the tristate option entirely. This *should* override the -w flag."
+  -b  bistate only: Will disable the tristate option entirely. This *should* override the -w flag.
+  -f  output file: Where you want the output file to land. If left empty, it will be placed in the working directory with a filename
+of YYYYmmDDHHMMSS-random.json. If you're specifying a file path, please put it in quotation marks."
 
   exit 0
 }
 
-while getopts "w:hb" opt ; do
+while getopts "w:hbf:" opt ; do
   case ${opt} in
     h)
       # Print the help.
@@ -32,6 +34,10 @@ while getopts "w:hb" opt ; do
       # Disable Tristate
       TDI=1
       ;;
+    f)
+      #Output filename
+      OUTFILE=$OPTARG
+      ;;
     *)
       #Anything else. print help and exit.
       printHelp
@@ -40,11 +46,17 @@ while getopts "w:hb" opt ; do
 done
 
 
-HEADER=$(head -n40 default.json)
-LIST=$(tail -n329 default.json | head -n-2 | cut -d":" -f1)
-x=41
+HEADER=$(head -n39 default.json)
+LIST=$(tail -n330 default.json | head -n-2 | cut -d":" -f1)
+x=40
 BODY=""
 
+if [ -z ${OUTFILE+x} ] ; then
+  TSTAMP=$(date +%Y%m%d%H%M%S)
+  FILENAME=$TSTAMP-random.json
+else
+  FILENAME=$OUTFILE
+fi
 
 bistate () {
   local TFNV=$(shuf -i 1-2 -n 1)
@@ -87,6 +99,13 @@ nrange () {
 for i in $LIST ; do
   VAL=""
   case $x in
+    41)
+      if [ "$val40" = "true" ] ; then
+        VAL="$(tristate)"
+      else
+        VAL="false"
+      fi
+      ;;
     43 | 46 | 64 | 96 | 15[0-1] | 157 | 158 | 163 | 176 | 195 | 20[3-6] | 20[8-9] | 210 | 301 | 30[4-7] | 310 | 317 | 353 | 364)
       VAL="$(bistate)"
       ;;
@@ -104,7 +123,7 @@ for i in $LIST ; do
       if [ "$val53" = "true" ] ; then
         VAL="$(tristate)"
       else
-        VAL="$false"
+        VAL="false"
       fi
       ;;
     56 | 6[0-1] )
@@ -120,6 +139,16 @@ for i in $LIST ; do
     62)
       VAL="$(nrange 0 8)"
       ;;
+    70)
+      if [ "$val68" = "true" ] ; then
+        VAL="$(tristate)"
+      else
+        VAL="false"
+      fi
+      if [ "$val69" = "true" ] ; then
+        VAL="false"
+      fi
+      ;;
     73)
       if [ "$val43" = "true" ] ; then
         VAL="$(tristate)"
@@ -127,8 +156,15 @@ for i in $LIST ; do
         VAL="false"
       fi
       ;;
-    76 | 79 | 83)
+    76 | 78 | 83)
       if [ "$val75" = "true" ] ; then
+        VAL="$(tristate)"
+      else
+        VAL="false"
+      fi
+      ;;
+    79 | 80)
+      if [ "$val78" != "false" ] ; then
         VAL="$(tristate)"
       else
         VAL="false"
@@ -227,6 +263,13 @@ for i in $LIST ; do
         VAL="false"
       fi
       ;;
+    306)
+      if [ "$val305" = "true" ] ; then
+        VAL="false"
+      else
+        VAL="$(bistate)"
+      fi
+      ;;
     308)
       if [ "$val307" = "true" ] ; then
         VAL="$(bistate)"
@@ -301,7 +344,7 @@ for i in $LIST ; do
       VAL=3
       ;;
     367)
-      if [ "$val81" = "true" ] ; then
+      if [ "$val81" = "true" ] && [ "$val82" = "true" ] ; then
         VAL="$(tristate)"
       else
         VAL="false"
@@ -314,17 +357,16 @@ for i in $LIST ; do
 
   valname="val$x"
   export $valname="$VAL"
-  if [ "$x" = "41" ] ; then
+  if [ "$x" = "40" ] ; then
     BODY="
-  $i: $VAL"
+    $i: $VAL"
   else
     BODY="$BODY,
-  $i: $VAL"
+    $i: $VAL"
   fi
   x=$(expr $x + 1)
 done
-TSTAMP=$(date +%Y%m%d%H%M%S)
 echo "$HEADER $BODY
   }
 }
-" >> $TSTAMP-random.json
+" > $FILENAME
