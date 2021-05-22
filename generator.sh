@@ -7,7 +7,7 @@ printHelp () {
   -w  tristate weight percentage as an interger: If unset, will default to 33. This is the percentage chance that a flag that can roll tristate will roll tristate. So, if you set this to 67, then it will be a 67% chance that a tristate flag will roll as unknown, and a 16.5% chance that it will roll either yes or no each.
   -b  bistate only: Will disable the tristate option entirely. This *should* override the -w flag.
   -f  output file: Where you want the output file to land. If left empty, it will be placed in the working directory with a filename
-of YYYYmmDDHHMMSS-random.json. If you're specifying a file path, please put it in quotation marks."
+      of YYYYmmDDHHMMSS-random.json. If you're specifying a file path, please put it in quotation marks."
 
   exit 0
 }
