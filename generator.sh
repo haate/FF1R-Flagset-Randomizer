@@ -291,6 +291,13 @@ for i in $LIST ; do
         VAL="false"
       fi
       ;;
+    318)
+      if [ "$val204" != "false" ] ; then
+        VAL="false"
+      else
+        VAL="$(tristate)"
+      fi
+      ;;
     321)
       if [ "$val319" != "false" ] || [ "$val320" != "false" ] ; then
         VAL="$(tristate)"
