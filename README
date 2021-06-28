@@ -20,3 +20,6 @@ links to `dash` rather than `bash`, and dash doesn't support the use of the `dec
 Other known issues: Sometimes, you will get a `Preset Load Failed` when importing the json. This is because some of the
 flags don't quite mesh with what I thought they were. If that happens, please open an issue with the error text pasted in, so
 I can fix it up.
+
+Currently, it will only work with the 4.1.6 version (https://4-1-6.finalfantasyrandomizer.com). I am working on updating it
+to work with the 4.2.0 version currently (and reworking how it runs overall).
