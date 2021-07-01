@@ -23,3 +23,5 @@ I can fix it up.
 
 Currently, it will only work with the 4.1.6 version (https://4-1-6.finalfantasyrandomizer.com). I am working on updating it
 to work with the 4.2.0 version currently (and reworking how it runs overall).
+*Further note: it will work with the 4.2.0 version, though the site will throw some warning messages (non fatal). Use on 4.2.0 does,
+currently at least, not include any of the new flags. Yet.
