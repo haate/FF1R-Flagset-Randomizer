@@ -110,8 +110,7 @@ if type(parseArgs.outfile) != None:
     try:
         if parseArgs.outfile[-1] != "/":
             parseArgs.outfile += "/"
-        else:
-            ofName = parseArgs.outfile + "FF1RR." + uTime + ".json"
+        ofName = parseArgs.outfile + "FF1RR." + uTime + ".json"
     except:
         ofName = "FF1RR." + uTime + ".json"
 else:
