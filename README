@@ -1,27 +1,34 @@
-This is just a simple little bash script to generate a random flag set for the Final Fantasy 1 randomizer.
+This is just a simple little python script to generate a random flag set for the Final Fantasy 1 randomizer.
 
-It's simple. It's ugly. And it'll generate some hellaciously disgusting flagsets.
+There are a few flags that don't match up with the rest of the codebase, so it's a bit ugly. 
 
-I'll probably get around to re-writing it in python eventually. Until I do though, I'm just going to keep using bash to do it.
+And it'll generate some hellaciously disgusting flagsets.
 
-Usage: ./generator.sh [-h] [-w NumberFrom0-100] [-b]
+usage: generator.py [-h] [-b] [-d] [-e] [-l] [-m] [-o OUTFILE] [-s] [-t] [-x]
 
-        -h      help: print this help and exit.
-        -w      tristate weight percentage as an interger: If unset, will default to 33. This is the percentage chance that a flag
-                that can roll tristate will roll tristate. So, if you set this to 67, then it will be a 67% chance that a tristate 
-                flag will roll as unknown, and a 16.5% chance that it will roll either yes or no each.
-        -b      bistate only: Will disable the tristate option entirely. This *should* override the -w flag.
-        -f      output file: Where you want the output file to land. If left empty, it will be placed in the working directory with a filename
-                of YYYYmmDDHHMMSS-random.json. If you're specifying a file path, please put it in quotation marks."
-        
-Please note: If you try running it using `sh generator.sh`, and you're using Ubuntu, it will fail because Ubuntu's default `sh` command 
-links to `dash` rather than `bash`, and dash doesn't support the use of the `declare` function.
+options:
+  -h, --help          show this help message and exit
+  -b, --blind         Make it a blind seed
+  -d, --deepdungeon   Enable the possibility of Deep Dungeon
+  -e, --experimental  Enable the experimental tab
+  -l, --levels        Enable the Max Level Slider and Starting level dropdown
+  -m, --mp            Enable max MP randomization
+  -o OUTFILE, --outfile OUTFILE
+                      Path where you want the output file dropped. Default is current working directory
+  -s, --shopkill      Enable shop kill chances
+  -t, --transmoog     Enable possible transmooglifier
+  -x, --xp            Allow per class XP randomization
 
-Other known issues: Sometimes, you will get a `Preset Load Failed` when importing the json. This is because some of the
-flags don't quite mesh with what I thought they were. If that happens, please open an issue with the error text pasted in, so
-I can fix it up.
+It will output a file called FF1R(unix timestamp).json. Take that on over to https://finalfantasyrandomizer.com,
+scroll down to the "Load from JSON" button, and go to town. 
 
-Currently, it will only work with the 4.1.6 version (https://4-1-6.finalfantasyrandomizer.com). I am working on updating it
-to work with the 4.2.0 version currently (and reworking how it runs overall).
-*Further note: it will work with the 4.2.0 version, though the site will throw some warning messages (non fatal). Use on 4.2.0 does,
-currently at least, not include any of the new flags. Yet.
+There are certain guard rails in place, as well as some of the standard QoL things that people are used to. If
+you want to change any of the guardrails themselves, just modify the "guardRails.json" file.
+
+I take no responsibility for damage to your sanity for using this.
+
+Requirements: python3 (written and tested with 3.10.12), PythonGit, and an internet connection
+
+#To Do:
+Get the flag dependencies enabled
+Figure out Why the spoiler bats return so many extra counts.
