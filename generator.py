@@ -107,9 +107,13 @@ timeStamp = datetime.datetime.now()
 uTime = str(datetime.datetime.timestamp(timeStamp))[0:10]
 fsName = "FF1Rando Rando Generated Flagset " + uTime
 if type(parseArgs.outfile) != None:
-    if parseArgs.outfile[-1] != "/":
-        parseArgs.outfile += "/"
-    ofName = parseArgs.outfile + "FF1RR." + uTime + ".json"
+    try:
+        if parseArgs.outfile[-1] != "/":
+            parseArgs.outfile += "/"
+        else:
+            ofName = parseArgs.outfile + "FF1RR." + uTime + ".json"
+    except:
+        ofName = "FF1RR." + uTime + ".json"
 else:
     ofName = "FF1RR." + uTime + ".json"
 guardOpen = open('guardRails.json')
