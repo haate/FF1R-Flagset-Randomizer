@@ -207,9 +207,6 @@ for razorFiles in fileList:
         match flagName:
             case "BetterTrapTreasure":
                 flagName = "BetterTrapChests"
-            case "ToFRMode":
-                flagName = "ShortToFR"
-                ctype = "TriStateCheckBox"
             case "FiendRefights":
                 flagName = "PreserveFiendRefights"
                 ctype = "TriStateCheckBox"
