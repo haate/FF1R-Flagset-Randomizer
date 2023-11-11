@@ -207,9 +207,6 @@ for razorFiles in fileList:
         match flagName:
             case "BetterTrapTreasure":
                 flagName = "BetterTrapChests"
-            case "FiendRefights":
-                flagName = "PreserveFiendRefights"
-                ctype = "TriStateCheckBox"
         # If it's a slider, get the min, max, and step value
         if ctype == "Slider" or ctype == "DoubleSlider" or ctype == "IntSlider":
             mif = f.find(" Min")
@@ -357,7 +354,10 @@ for n, v in flagDict.items():
                     rollv = rollv / 10
             outputDict[n] = rollv
         case "EnumDropDown":
-            maxv = v[1] - 1 # Reduce Volume by 1, as the dropdown are 0 indexed
+            if n == "OwMapExchange":
+                maxv = v[1] - 2 # Reduce Max Value by 2, To ensure it's not prompting for a map to be imported
+            else:
+                maxv = v[1] - 1 # Reduce Volume by 1, as the dropdown are 0 indexed
             rollv = random.randint(0,maxv)
             # If deep dungone isn't disabled, make sure it doesn't roll
             if parseArgs.deepdungeon != True:
