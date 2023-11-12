@@ -54,6 +54,13 @@ def searchText(path, text):
                         continue
     pass
 
+def flagConflict(dName, v1, v2):
+    if dName[v1] != False and dName[v2] != False:
+        cflip = random.randint(1,2)
+        if cflip == 1:
+            dName[v1] = False
+        else:
+            dName[v2] = False
 
 #Set up early variables
 repoUrl = "https://github.com/FiendsOfTheElements/FF1Randomizer.git"
@@ -384,16 +391,18 @@ if outputDict['DisableTentSaving'] == True and outputDict['DisableInnSaving'] ==
             outputDict['SaveWhenGameOver'] = True
 
 # If procgen overworld is turned on, use pregenerated map
-    if outputDict['OwMapExchange'] == 1:
-        outputDict['OwRandomPregen'] = True
+if outputDict['OwMapExchange'] == 1:
+    outputDict['OwRandomPregen'] = True
+
+# Manually added exclusions, until I get around to doing these programatically
+# Tail
+flagConflict(outputDict, 'FreeTail', 'NoTail')
+
+# Masa
+flagConflict(outputDict, 'NoMasamune', 'GuaranteedMasamune')
 
 # Bug found by Aestolia in 4.7.4 with NPC recruit and Tavern mode, so neither rolls off, ensure one of them is off.
-    if outputDict['RecruitmentMode'] != False and outputDict['ClassAsNpcKeyNPC'] != False:
-        cflip = random.randint(1,2)
-        if clfip == 1:
-            outputDict['ClassAsNpcKeyNPC'] = False
-        else:
-            outputDict['RecruitmentMode'] = False
+flagConflict(outputDict,'RecruitmentMode', 'ClassAsNpcKeyNPC')
 
 ofDict = {"Name": fsName,
 "Flags": outputDict}
