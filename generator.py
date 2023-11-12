@@ -387,6 +387,14 @@ if outputDict['DisableTentSaving'] == True and outputDict['DisableInnSaving'] ==
     if outputDict['OwMapExchange'] == 1:
         outputDict['OwRandomPregen'] = True
 
+# Bug found by Aestolia in 4.7.4 with NPC recruit and Tavern mode, so neither rolls off, ensure one of them is off.
+    if outputDict['RecruitmentMode'] != False and outputDict['ClassAsNpcKeyNPC'] != False:
+        cflip = random.randint(1,2)
+        if clfip == 1:
+            outputDict['ClassAsNpcKeyNPC'] = False
+        else:
+            outputDict['RecruitmentMode'] = False
+
 ofDict = {"Name": fsName,
 "Flags": outputDict}
 
