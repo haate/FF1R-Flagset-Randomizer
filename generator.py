@@ -189,7 +189,10 @@ for razorFiles in fileList:
         lastLine = f
         
         # Strip out the extra cruft
-        f = re.sub('\s+',' ',f)
+        if platform.system != 'Windows':
+            f = re.sub('\s+',' ',f)
+        else:
+            f = re.sub(r'\s+',' ',f)
         
         # If it's the PartyTab.razor file, gotta change it up a bit, since they're in tables.
         if razorFiles == 'PartyTab.razor':
