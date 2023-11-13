@@ -368,7 +368,7 @@ for n, v in flagDict.items():
             else:
                 maxv = v[1] - 1 # Reduce Volume by 1, as the dropdown are 0 indexed
             rollv = random.randint(0,maxv)
-            # If deep dungone isn't disabled, make sure it doesn't roll
+            # If deep dungon isn't disabled, make sure it doesn't roll
             if parseArgs.deepdungeon != True:
                 if n == "GameMode":
                     while rollv == 1:
@@ -396,12 +396,19 @@ if outputDict['DisableTentSaving'] == True and outputDict['DisableInnSaving'] ==
 if outputDict['OwMapExchange'] == 1:
     outputDict['OwRandomPregen'] = True
 
+# If No Overworld, make sure floater isn't removed
+if outputDict['GameMode'] == 2:
+    outputDict['NoFloater'] = False
+
 # Manually added exclusions, until I get around to doing these programatically
 # Tail
 flagConflict(outputDict, 'FreeTail', 'NoTail')
 
 # Masa
 flagConflict(outputDict, 'NoMasamune', 'GuaranteedMasamune')
+
+# Enemizer & Lich's Revenge
+flagConflict(outputDict, 'SpookyFlag', 'RandomizeEnemizer')
 
 # Bug found by Aestolia in 4.7.4 with NPC recruit and Tavern mode, so neither rolls off, ensure one of them is off.
 flagConflict(outputDict,'RecruitmentMode', 'ClassAsNpcKeyNPC')
