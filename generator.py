@@ -133,6 +133,8 @@ if parseArgs.mp == True:
         del guardJson[m]
 if parseArgs.transmoog == True:
     del guardJson["Transmooglifier"]
+    del guardJson["GuaranteeCustomClassComposition"]
+    del guardJson["MooglieWeaponBalance"]
 if parseArgs.shopkill == True:
     sklist = ["ShopKillMode_Weapons","ShopKillMode_Armor","ShopKillMode_Item","ShopKillMode_Black","ShopKillMode_White","ShopKillFactor_Weapons","ShopKillFactor_Armor","ShopKillFactor_Item","ShopKillFactor_Black","ShopKillFactor_White"]
     for s in sklist:
