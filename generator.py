@@ -189,10 +189,7 @@ for razorFiles in fileList:
         lastLine = f
         
         # Strip out the extra cruft
-        if platform.system != 'Windows':
-            f = re.sub('\s+',' ',f)
-        else:
-            f = re.sub(r'\s+',' ',f)
+        f = re.sub(r'\s+',' ',f)
         
         # If it's the PartyTab.razor file, gotta change it up a bit, since they're in tables.
         if razorFiles == 'PartyTab.razor':
@@ -276,10 +273,10 @@ for razorFiles in fileList:
                     edi = 1
 
                 # Clean up Tabs and extra spaces
-                el = el.strip(re.sub('\s',' ',el))
+                el = el.strip(re.sub(r'\s',' ',el))
 
                 # Skip empty lines
-                if len(re.findall('\S',el)) < 1:
+                if len(re.findall(r'\S',el)) < 1:
                     continue
 
                 # Count all the pertinent lines only.
