@@ -3,7 +3,7 @@ try:
     import git
 except:
     print("\nNeed to have GitPython installed for this to function. Please run 'pip install GitPython', then try again.")
-    exit 
+    exit(1) 
 import os
 import shutil
 import random
@@ -12,6 +12,7 @@ import json
 import time
 import datetime
 import argparse
+import platform
 
 # Shamelessly stolen from https://medium.com/@nutanbhogendrasharma/searching-text-in-multiple-files-in-python-5b40196b2d10, and then 
 # tweaked so it works properly for my purposes. Yes, it's ugly, but it works, and it doesn't cause python to error out as the original
@@ -37,7 +38,10 @@ def searchText(path, text):
         for dirName in folderList:
             dfiles = os.listdir(dirName)
             for dfn in dfiles:
-                abs_path = dirName + '/' + dfn
+                if platform.version() != 'Windows':
+                    abs_path = dirName + '/' + dfn
+                else:
+                    abs_path = dirName + '\\' + dfn
                 with open(abs_path, 'r') as f:
                     if abs_path.endswith('cs'):
                         pass
@@ -90,7 +94,10 @@ parseArgs = args.parse_args()
 
 # Get the repo 
 homeDir = Path.home()
-workingDir = str(homeDir) + '/FF1FRtmp'
+if platform.system() != 'Windows':
+    workingDir = str(homeDir) + '/FF1FRtmp'
+else:
+    workingDir = str(homeDir) + '\\FF1FRtmp'
 try:
     repo = git.Repo.clone_from(repoUrl, workingDir)
 except:
@@ -115,8 +122,12 @@ uTime = str(datetime.datetime.timestamp(timeStamp))[0:10]
 fsName = "FF1Rando Rando Generated Flagset " + uTime
 if type(parseArgs.outfile) != None:
     try:
-        if parseArgs.outfile[-1] != "/":
-            parseArgs.outfile += "/"
+        if platform.system() != 'Windows':
+            if parseArgs.outfile[-1] != "/":
+                parseArgs.outfile += "/"
+        else:
+            if parseArgs.outfile[-1] != '\\':
+                parseArgs.outfile += '\\'
         ofName = parseArgs.outfile + "FF1RR." + uTime + ".json"
     except:
         ofName = "FF1RR." + uTime + ".json"
@@ -151,8 +162,12 @@ if parseArgs.levels == True:
         del guardJson[l]
 
 # Get file list
-btPath = workingDir + '/FF1Blazorizer/Tabs/'
-libPath = workingDir + '/FF1Lib/'
+if platform.system() != 'Windows':
+    btPath = workingDir + '/FF1Blazorizer/Tabs/'
+    libPath = workingDir + '/FF1Lib/'
+else:
+    btPath = workingDir + '\\FF1Blazorizer\\Tabs\\'
+    libPath = workingDir + '\\FF1Lib\\'
 fileList = os.listdir(btPath)
 ignoreFiles = ['FunTab.razor','PresetsTab.razor', 'FileTab.razor', 'BlindSeedTab.razor', 'ExperimentalTab.razor', 'QoLTab.razor']
 if parseArgs.experimental == True:
