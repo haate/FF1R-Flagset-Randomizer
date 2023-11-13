@@ -38,7 +38,7 @@ def searchText(path, text):
         for dirName in folderList:
             dfiles = os.listdir(dirName)
             for dfn in dfiles:
-                if platform.version() != 'Windows':
+                if platform.system() != 'Windows':
                     abs_path = dirName + '/' + dfn
                 else:
                     abs_path = dirName + '\\' + dfn
